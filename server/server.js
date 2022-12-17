@@ -12,5 +12,5 @@ app.use(express.static('server/public'));
 app.use('/toDoList', toDoListRouter)
 
 app.listen(PORT, () => {
-    console.log('listening on port', PORT);
+console.log('listening on port', PORT);
 });
