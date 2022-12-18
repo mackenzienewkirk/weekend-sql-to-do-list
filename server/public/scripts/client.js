@@ -13,7 +13,7 @@ function fetchAndRenderTasks() {
     method: 'GET',
     url: '/toDoList'
     }).then((response) => {
-    $('#taskList').empty();
+        $('#taskList').empty();
     for (let toDoList of response) {
         $('#taskList').append(`
         <li ${taskCompleted(toDoList)} data-id=${toDoList.id}>

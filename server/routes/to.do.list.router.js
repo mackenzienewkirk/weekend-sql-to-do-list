@@ -34,7 +34,7 @@ toDoListRouter.post('/', (req,res) => {
     INSERT INTO "toDoList" ("task", "notes", "status")
         VALUES ($1,$2,$3);
     `;
-    let sqlValues = [newTaskInput.task, newNotesInput.notes, newStatusInput.status];
+    let sqlValues = [req.body.task, req.body.notes, req.body.status];
     pool.query(sqlQuery, sqlValues)
     .then((dbRes) => {
         res.sendStatus(201);
@@ -44,6 +44,8 @@ toDoListRouter.post('/', (req,res) => {
     res.sendStatus(500);
     })
 })
+
+
 
 //PUT route
 
