@@ -1,30 +1,92 @@
-console.log( 'This is the client.js' );
+$(document).ready(onReady);
 
-$( document ).ready( function(){
-console.log( 'ready function' );
-$('body').on('click', '.readyToTransferButton', readyToTransferButton);
-$('body').on('click', '.deleteButton', deleteButton);
-  //Establishing each click listener
-setupClickListeners()
-getTasks();
-// load existing koalas on page load
-
-});
-
-function setupClickListeners() {
-    $( '#addButton' ).on( 'click', function(){
-    console.log( 'in addButton on click' );
-    let newTask = $('#newTask').val();
-    let newNotes = $('#newNotes').val();
-    let newStatus = $('#newStatus').val();
-
-    let koalaToSend = {
-        task: newName,
-        notes: newAge,
-        status: newGender,
-    }
-      // call saveTask with the new obejct
-saveTask( koalaToSend );
-}); 
+function onReady() {
+console.log('The onReady function');
+    fetchAndRenderTasks();
+    $('#addTaskButton').on('click', addTask);
+    $('body').on('click', '.deleteButton', deleteTask);
+    $('body').on('click', '.completeButton', completeTask);
 }
 
+function fetchAndRenderTasks() {
+    $.ajax({
+    method: 'GET',
+    url: '/toDoList'
+    }).then((response) => {
+    $('#taskList').empty();
+    for (let toDoList of response) {
+        $('#taskList').append(`
+        <li ${taskCompleted(toDoList)} data-id=${toDoList.id}>
+            ${toDoList.task}, (${toDoList.notes}), is ${toDoList.status}
+            <button class="completeButton">Complete</button>
+            <button class="deleteButton">Delete</button>
+        </li>
+        `)
+    }
+    }).catch((error) => {
+    console.log('something broke:', error);
+    })
+}
+
+function addTask() {
+    let newTask = $('#taskInput').val();
+    let newNotes = $('#notesInput').val();
+    let newStatus = $('#statusInput').val();
+
+    let newTaskItem = {
+        task: newTask,
+        notes: newNotes,
+        status: newStatus
+    }
+
+    $.ajax({
+    method: 'POST',
+    url: '/toDoList',
+    data: newTaskItem
+    }).then((response) => {
+    fetchAndRenderTasks();
+    }).catch((error) => {
+    console.log('something broke in addTask():', error);
+    })
+}
+
+//Need to check in on PUT ajax to connect server when adding an item
+//Check on 
+
+function deleteTask() {
+    let idToDelete = $(this).data().id;
+
+    $.ajax({
+    method: 'DELETE',
+    url: `/toDoList/${idToDelete}`
+    }).then((response) => {
+    fetchAndRenderTasks();
+    }).catch((error) => {
+    console.log('deleteTask() big broke:', error);
+    })
+}
+
+function completeTask() {
+    let idToUpdate = $(this).data().id;
+    
+    $.ajax({
+    method: 'PUT',
+    url: `/toDoList/${idToUpdate}`,
+    data: {
+        status: 'Done'
+    }
+    }).then((response) => {
+    fetchAndRenderTasks();
+    }).catch((error) => {
+    console.log('something failed intransformCreatureToVampire():', error);
+    })
+}
+
+function taskCompleted(toDoList) {
+    if (toDoList.status === 'Done') {
+        return 'class="completed"'
+    }
+    else {
+        return ''
+    }
+}

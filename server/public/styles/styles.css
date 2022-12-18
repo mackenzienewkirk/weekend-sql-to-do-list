@@ -1,5 +1,32 @@
 body {
+    font-size: larger;
     text-align: center;
     background-color: #FFCCFF;
     color: #000066;
+    border: 10px solid white;
+    height: 1000px;
+    margin: 5;
+}
+
+h3 {
+    font-size: 50px;
+}
+
+h4{
+    font-size: 50px;
+    text-align: left;
+}
+ul {
+    text-align: left;
+    font-size: larger;
+
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+.completed {
+    color: #CCFF00;
+    text-decoration:line-through;
 }
