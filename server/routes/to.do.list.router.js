@@ -60,7 +60,7 @@ console.log('req.body:', req.body);
     WHERE "id" = $2;
     `
 
-let sqlValues = [newStatus, idToUpdate];
+    let sqlValues = [newStatus, idToUpdate];
 
 pool.query(sqlQuery, sqlValues)
     .then((dbRes) => {
@@ -71,6 +71,7 @@ pool.query(sqlQuery, sqlValues)
         res.sendStatus(500);
     })
 })
+
 
 //Delete route to delete a task
 

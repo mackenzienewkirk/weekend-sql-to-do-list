@@ -51,10 +51,9 @@ function addTask() {
 }
 
 //Need to check in on PUT ajax to connect server when adding an item
-//Check on 
 
 function deleteTask() {
-    let idToDelete = $(this).data().id;
+    let idToDelete = $(this).parent().data().id;
 
     $.ajax({
     method: 'DELETE',
@@ -67,7 +66,7 @@ function deleteTask() {
 }
 
 function completeTask() {
-    let idToUpdate = $(this).data().id;
+    let idToUpdate = $(this).parent().data().id;
     
     $.ajax({
     method: 'PUT',
@@ -78,7 +77,7 @@ function completeTask() {
     }).then((response) => {
     fetchAndRenderTasks();
     }).catch((error) => {
-    console.log('something failed intransformCreatureToVampire():', error);
+    console.log('something failed in completeTask():', error);
     })
 }
 
