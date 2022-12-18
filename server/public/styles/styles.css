@@ -4,8 +4,9 @@ body {
     background-color: #FFCCFF;
     color: #000066;
     border: 10px solid white;
-    height: 1000px;
-    margin: 5;
+    height: 2000px;
+    margin: 10;
+    font-family: Didot, Didot LT STD, Hoefler Text, Garamond, Calisto MT, Times New Roman, serif;
 }
 
 h3 {
@@ -15,6 +16,7 @@ h3 {
 h4{
     font-size: 50px;
     text-align: left;
+    margin: 20px;
 }
 ul {
     text-align: left;
